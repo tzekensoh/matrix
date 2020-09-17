@@ -17,22 +17,18 @@ class Matrix(val values: Array<Array<Double>>) {
         if (thisColumns != thatRows)
             throw Exception("Dimension incompatible")
 
-        var result = Matrix(Array(thisRows){Array(thatColumns){0.0}})  // arrayOf(arrayOf(this.values[0][1] * m2.values[1][1])))
-        for (i in 0..result.values.count()-1)
-            for (j in 0..result.values[i].count()-1)
+        var result = Matrix(Array(thisRows){Array(thatColumns){0.0}})
+        for (i in 0 until result.values.count())
+            for (j in 0 until result.values[i].count())
             {
                 // loop through ith row in this
                 // as well as the jth column in m2
                 var k = 0
                 while (k < values[i].count())
                 {
-                    // println("First ${i} ${k}: ${values[i][k]}")
-                    // println("Second ${k} ${j}: ${m2.values[k][j]}")
                     result.values[i][j] += values[i][k] * m2.values[k][j]
                     k++
                 }
-
-                // println("${i} ${j}: ${result.values[i][j]}")
             }
         return result
     }
@@ -54,7 +50,6 @@ class Matrix(val values: Array<Array<Double>>) {
             augmentedMatrix.clearAfterOneAt(i) // need all elements after ith element to be zero
         }
 
-        // println(augmentedMatrix)
         // Extract the augmented part of the matrix
         val extracted = Array(augmentedMatrix.values.count()){Array(augmentedMatrix.values.count()){0.0} }
         for (i in 0 until augmentedMatrix.values.count())
@@ -62,7 +57,7 @@ class Matrix(val values: Array<Array<Double>>) {
             for (j in 0 until augmentedMatrix.values.count())
                 extracted[i][j] = augmentedMatrix.values[i][j + augmentedMatrix.values.count()]
         }
-        return Matrix(extracted)  //Array(0){Array(0){0.0} })
+        return Matrix(extracted)
     }
 
     private fun clearAfterOneAt(i: Int)
@@ -165,9 +160,8 @@ class Matrix(val values: Array<Array<Double>>) {
 }
 
 fun main () {
-    val m2 = Matrix(arrayOf(arrayOf(2.0),arrayOf(-1.0),arrayOf(7.0))) // arrayOf(arrayOf(1.0,2.0),arrayOf(3.0,4.0), arrayOf(5.0,6.1))) // , arrayOf(9.2,8.3)))
+    val m1 = Matrix(arrayOf(arrayOf(2.0),arrayOf(-1.0),arrayOf(7.0)))
+    val m2 = Matrix(arrayOf(arrayOf(1.0,3.0,2.0), arrayOf(2.0,7.0,7.0), arrayOf(2.0,5.0,2.0)))
 
-    val m3 = Matrix(arrayOf(arrayOf(1.0,3.0,2.0), arrayOf(2.0,7.0,7.0), arrayOf(2.0,5.0,2.0)))
-
-    println(m3.inverse() * m2)
+    println(m2.inverse() * m1)
 }
